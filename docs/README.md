@@ -22,7 +22,7 @@ K-Food Shorts는 공공데이터를 활용하여 음식점 정보를 TikTok/Inst
 ### 설치 및 실행
 ```bash
 # 저장소 클론
-git clone https://github.com/2001585/k-food-shorts.git
+git clone https://github.com/yourusername/k-food-shorts.git
 cd k-food-shorts
 
 # 의존성 설치
@@ -41,16 +41,16 @@ pnpm dev
 ## 📋 프로젝트 문서
 
 ### 개발 계획 문서
-1. [프로젝트 개요](./docs/01_PROJECT_OVERVIEW.md) - 프로젝트 목표 및 범위
-2. [기술 스택](./docs/02_TECH_STACK.md) - 사용 기술 및 아키텍처
-3. [공공데이터 연동](./docs/03_PUBLIC_DATA_INTEGRATION.md) - 데이터 수집 및 처리
-4. [UI/UX 디자인](./docs/04_UI_UX_DESIGN.md) - 디자인 시스템 및 가이드
-5. [데이터베이스 설계](./docs/05_DATABASE_DESIGN.md) - DB 스키마 및 최적화
-6. [API 설계](./docs/06_API_DESIGN.md) - RESTful API 명세
-7. [프론트엔드 개발](./docs/07_FRONTEND_DEVELOPMENT.md) - 웹/모바일 앱 개발
-8. [백엔드 개발](./docs/08_BACKEND_DEVELOPMENT.md) - 서버 개발 및 구현
-9. [배포 및 운영](./docs/09_DEPLOYMENT_OPERATIONS.md) - CI/CD 및 인프라
-10. [테스팅 및 QA](./docs/10_TESTING_QA.md) - 품질 관리 전략
+1. [프로젝트 개요](./01_PROJECT_OVERVIEW.md) - 프로젝트 목표 및 범위
+2. [기술 스택](./02_TECH_STACK.md) - 사용 기술 및 아키텍처
+3. [공공데이터 연동](./03_PUBLIC_DATA_INTEGRATION.md) - 데이터 수집 및 처리
+4. [UI/UX 디자인](./04_UI_UX_DESIGN.md) - 디자인 시스템 및 가이드
+5. [데이터베이스 설계](./05_DATABASE_DESIGN.md) - DB 스키마 및 최적화
+6. [API 설계](./06_API_DESIGN.md) - RESTful API 명세
+7. [프론트엔드 개발](./07_FRONTEND_DEVELOPMENT.md) - 웹/모바일 앱 개발
+8. [백엔드 개발](./08_BACKEND_DEVELOPMENT.md) - 서버 개발 및 구현
+9. [배포 및 운영](./09_DEPLOYMENT_OPERATIONS.md) - CI/CD 및 인프라
+10. [테스팅 및 QA](./10_TESTING_QA.md) - 품질 관리 전략
 
 ## 🏗️ 프로젝트 구조
 ```
@@ -142,8 +142,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 프로젝트 관련 문의사항은 다음으로 연락주세요:
 
-- Email: hoonso20@kunsan.ac.kr
-- GitHub: [@2001585](https://github.com/2001585)
+- Email: your.email@example.com
+- GitHub: [@yourusername](https://github.com/yourusername)
 
 ## 🙏 감사의 글
 
