@@ -8,7 +8,12 @@
       "Bash(gh auth:*)",
       "mcp__sequential-thinking__sequentialthinking",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(pnpm:*)",
+      "Bash(tree:*)",
+      "Bash(npm init:*)"
     ],
     "deny": [],
     "ask": []

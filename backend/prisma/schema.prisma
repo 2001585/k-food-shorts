@@ -1,0 +1,260 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Restaurant {
+  id          String   @id @default(uuid())
+  businessId  String   @unique @map("business_id")
+  name        String
+  category    String
+  subCategory String?  @map("sub_category")
+  description String?
+
+  // 주소 정보
+  addressFull     String  @map("address_full")
+  addressCity     String  @map("address_city")
+  addressDistrict String  @map("address_district")
+  addressStreet   String? @map("address_street")
+  zipCode         String? @map("zip_code")
+  latitude        Float
+  longitude       Float
+
+  // 연락처 정보
+  phone   String?
+  website String?
+  email   String?
+
+  // 영업 정보
+  businessHours   Json?    @map("business_hours")
+  holidayInfo     String?  @map("holiday_info")
+  parkingAvailable Boolean @default(false) @map("parking_available")
+
+  // 평가 정보
+  ratingAvg   Float @default(0) @map("rating_avg")
+  ratingCount Int   @default(0) @map("rating_count")
+  reviewCount Int   @default(0) @map("review_count")
+
+  // 가격 정보
+  priceRange Int? @map("price_range")
+  avgPrice   Int? @map("avg_price")
+
+  // 메타 정보
+  viewCount     Int @default(0) @map("view_count")
+  likeCount     Int @default(0) @map("like_count")
+  shareCount    Int @default(0) @map("share_count")
+  bookmarkCount Int @default(0) @map("bookmark_count")
+
+  // 상태 및 타임스탬프
+  status         String    @default("active")
+  isVerified     Boolean   @default(false) @map("is_verified")
+  source         String?
+  popularityScore Float    @default(0) @map("popularity_score")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  menus        Menu[]
+  contents     Content[]
+  reviews      Review[]
+  interactions UserInteraction[]
+
+  @@map("restaurants")
+}
+
+model Menu {
+  id           String  @id @default(uuid())
+  restaurantId String  @map("restaurant_id")
+  name         String
+  description  String?
+  price        Int
+  discountPrice Int?   @map("discount_price")
+
+  category String?
+  tags     String[]
+
+  imageUrl      String? @map("image_url")
+  thumbnailUrl  String? @map("thumbnail_url")
+
+  isAvailable   Boolean @default(true) @map("is_available")
+  isPopular     Boolean @default(false) @map("is_popular")
+  isRecommended Boolean @default(false) @map("is_recommended")
+  isNew         Boolean @default(false) @map("is_new")
+
+  allergenInfo  String[] @map("allergen_info")
+  nutritionInfo Json?    @map("nutrition_info")
+
+  displayOrder Int @default(0) @map("display_order")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("menus")
+}
+
+model Content {
+  id           String  @id @default(uuid())
+  restaurantId String  @map("restaurant_id")
+  type         String  // image, video, story
+  url          String
+  thumbnailUrl String? @map("thumbnail_url")
+
+  title   String?
+  caption String?
+  tags    String[]
+
+  width    Int?
+  height   Int?
+  duration Int? // 비디오 길이 (초)
+  fileSize Int? @map("file_size")
+
+  viewCount  Int @default(0) @map("view_count")
+  likeCount  Int @default(0) @map("like_count")
+  shareCount Int @default(0) @map("share_count")
+
+  displayOrder Int     @default(0) @map("display_order")
+  isFeatured   Boolean @default(false) @map("is_featured")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("contents")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  email    String? @unique
+  phone    String? @unique
+  password String? @map("password_hash")
+
+  // 프로필 정보
+  username     String  @unique
+  displayName  String? @map("display_name")
+  profileImage String? @map("profile_image")
+  bio          String?
+
+  // 위치 정보
+  lastLatitude       Float?  @map("last_latitude")
+  lastLongitude      Float?  @map("last_longitude")
+  preferredCity      String? @map("preferred_city")
+  preferredDistrict  String? @map("preferred_district")
+
+  // 선호도 정보
+  preferredCategories String[] @map("preferred_categories")
+  dietaryRestrictions String[] @map("dietary_restrictions")
+  pricePreference     Int?     @map("price_preference")
+
+  // 활동 정보
+  totalViews     Int @default(0) @map("total_views")
+  totalLikes     Int @default(0) @map("total_likes")
+  totalBookmarks Int @default(0) @map("total_bookmarks")
+
+  // 계정 상태
+  role           String  @default("user")
+  status         String  @default("active")
+  emailVerified  Boolean @default(false) @map("email_verified")
+  phoneVerified  Boolean @default(false) @map("phone_verified")
+
+  // 설정
+  notificationSettings Json @default("{}") @map("notification_settings")
+  privacySettings      Json @default("{}") @map("privacy_settings")
+
+  lastLoginAt DateTime? @map("last_login_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  deletedAt   DateTime? @map("deleted_at")
+
+  // Relations
+  reviews      Review[]
+  interactions UserInteraction[]
+
+  @@map("users")
+}
+
+model UserInteraction {
+  id           String  @id @default(uuid())
+  userId       String  @map("user_id")
+  restaurantId String  @map("restaurant_id")
+  type         String  // view, like, bookmark, share
+  contentId    String? @map("content_id")
+
+  duration Int?    @map("duration") // 조회 시간 (초)
+  source   String? // 유입 경로
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, restaurantId, type])
+  @@map("user_interactions")
+}
+
+model Review {
+  id           String  @id @default(uuid())
+  userId       String  @map("user_id")
+  restaurantId String  @map("restaurant_id")
+  rating       Int
+  content      String?
+
+  images String[]
+
+  helpfulCount Int @default(0) @map("helpful_count")
+  reportCount  Int @default(0) @map("report_count")
+
+  isVerified Boolean @default(false) @map("is_verified")
+
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  // Relations
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  @@map("reviews")
+}
+
+model Feed {
+  id           String @id @default(uuid())
+  restaurantId String @map("restaurant_id")
+
+  // 피드 메타데이터
+  sequenceNumber Int    @default(autoincrement()) @map("sequence_number")
+  feedDate       DateTime @default(now()) @map("feed_date")
+
+  // 노출 가중치
+  weight Float @default(1.0)
+
+  // 타겟팅
+  targetCategories String[] @map("target_categories")
+  targetLocations  String[] @map("target_locations")
+  targetAgeGroups  String[] @map("target_age_groups")
+
+  // 성과 지표
+  impressionCount  Int   @default(0) @map("impression_count")
+  engagementRate   Float @default(0) @map("engagement_rate")
+
+  isActive  Boolean   @default(true) @map("is_active")
+  expiresAt DateTime? @map("expires_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("feeds")
+}

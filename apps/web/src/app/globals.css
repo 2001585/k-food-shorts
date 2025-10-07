@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary-red: #FF3B30;
+    --primary-orange: #FF9500;
+    
+    --neutral-black: #1C1C1E;
+    --neutral-gray-900: #2C2C2E;
+    --neutral-gray-500: #8E8E93;
+    --neutral-gray-100: #F2F2F7;
+    --neutral-white: #FFFFFF;
+    
+    --semantic-success: #34C759;
+    --semantic-warning: #FF9500;
+    --semantic-error: #FF3B30;
+    --semantic-info: #007AFF;
+  }
+
+  .dark {
+    --dark-bg: #000000;
+    --dark-surface: #1C1C1E;
+    --dark-text: #FFFFFF;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Hide scrollbar for mobile */
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Snap scroll for feed */
+.snap-y {
+  scroll-snap-type: y mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Full screen video */
+.full-screen-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
