@@ -8,9 +8,9 @@ export class RestaurantsController {
   constructor(private readonly restaurantsService: RestaurantsService) {}
 
   @Get('feed')
-  @UseGuards(JwtAuthGuard)
-  async getFeed(@Request() req, @Query() getFeedDto: GetFeedDto) {
-    return this.restaurantsService.getFeed(req.user.userId, getFeedDto);
+  async getFeed(@Query() getFeedDto: GetFeedDto) {
+    // 임시로 익명 사용자 허용
+    return this.restaurantsService.getFeed('anonymous', getFeedDto);
   }
 
   @Get('search')

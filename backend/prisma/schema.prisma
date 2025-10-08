@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Restaurant {
@@ -32,8 +32,8 @@ model Restaurant {
   website String?
   email   String?
 
-  // 영업 정보
-  businessHours   Json?    @map("business_hours")
+  // 영업 정보 (JSON 대신 문자열로)
+  businessHours   String?  @map("business_hours") // JSON 문자열로 저장
   holidayInfo     String?  @map("holiday_info")
   parkingAvailable Boolean @default(false) @map("parking_available")
 
@@ -80,7 +80,7 @@ model Menu {
   discountPrice Int?   @map("discount_price")
 
   category String?
-  tags     String[]
+  tags     String? // 배열 대신 콤마로 구분된 문자열
 
   imageUrl      String? @map("image_url")
   thumbnailUrl  String? @map("thumbnail_url")
@@ -90,8 +90,8 @@ model Menu {
   isRecommended Boolean @default(false) @map("is_recommended")
   isNew         Boolean @default(false) @map("is_new")
 
-  allergenInfo  String[] @map("allergen_info")
-  nutritionInfo Json?    @map("nutrition_info")
+  allergenInfo  String? @map("allergen_info") // 배열 대신 콤마로 구분된 문자열
+  nutritionInfo String? @map("nutrition_info") // JSON 대신 문자열
 
   displayOrder Int @default(0) @map("display_order")
 
@@ -113,7 +113,7 @@ model Content {
 
   title   String?
   caption String?
-  tags    String[]
+  tags    String? // 배열 대신 콤마로 구분된 문자열
 
   width    Int?
   height   Int?
@@ -154,10 +154,10 @@ model User {
   preferredCity      String? @map("preferred_city")
   preferredDistrict  String? @map("preferred_district")
 
-  // 선호도 정보
-  preferredCategories String[] @map("preferred_categories")
-  dietaryRestrictions String[] @map("dietary_restrictions")
-  pricePreference     Int?     @map("price_preference")
+  // 선호도 정보 (배열 대신 콤마로 구분된 문자열)
+  preferredCategories String? @map("preferred_categories")
+  dietaryRestrictions String? @map("dietary_restrictions")
+  pricePreference     Int?    @map("price_preference")
 
   // 활동 정보
   totalViews     Int @default(0) @map("total_views")
@@ -170,9 +170,9 @@ model User {
   emailVerified  Boolean @default(false) @map("email_verified")
   phoneVerified  Boolean @default(false) @map("phone_verified")
 
-  // 설정
-  notificationSettings Json @default("{}") @map("notification_settings")
-  privacySettings      Json @default("{}") @map("privacy_settings")
+  // 설정 (JSON 대신 문자열)
+  notificationSettings String @default("{}") @map("notification_settings")
+  privacySettings      String @default("{}") @map("privacy_settings")
 
   lastLoginAt DateTime? @map("last_login_at")
   createdAt   DateTime  @default(now()) @map("created_at")
@@ -213,7 +213,7 @@ model Review {
   rating       Int
   content      String?
 
-  images String[]
+  images String? // 배열 대신 콤마로 구분된 문자열
 
   helpfulCount Int @default(0) @map("helpful_count")
   reportCount  Int @default(0) @map("report_count")
@@ -236,16 +236,16 @@ model Feed {
   restaurantId String @map("restaurant_id")
 
   // 피드 메타데이터
-  sequenceNumber Int    @default(autoincrement()) @map("sequence_number")
+  sequenceNumber Int      @default(1) @map("sequence_number") // autoincrement 제거
   feedDate       DateTime @default(now()) @map("feed_date")
 
   // 노출 가중치
   weight Float @default(1.0)
 
-  // 타겟팅
-  targetCategories String[] @map("target_categories")
-  targetLocations  String[] @map("target_locations")
-  targetAgeGroups  String[] @map("target_age_groups")
+  // 타겟팅 (배열 대신 콤마로 구분된 문자열)
+  targetCategories String? @map("target_categories")
+  targetLocations  String? @map("target_locations")
+  targetAgeGroups  String? @map("target_age_groups")
 
   // 성과 지표
   impressionCount  Int   @default(0) @map("impression_count")

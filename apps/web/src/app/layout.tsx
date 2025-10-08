@@ -1,17 +1,21 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 
-const inter = Inter({ subsets: ['latin'] })
+const plusJakartaSans = Plus_Jakarta_Sans({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '700', '800'],
+  variable: '--font-display'
+})
 
 export const metadata: Metadata = {
-  title: 'K-Food Shorts',
-  description: '공공데이터 기반 음식점 숏폼 콘텐츠 플랫폼',
-  keywords: ['food', 'shorts', 'korean', 'restaurant', 'public data'],
+  title: 'Foodfie',
+  description: '나만의 맛집을 발견하는 숏폼 플랫폼',
+  keywords: ['food', 'shorts', 'restaurant', 'foodie'],
   authors: [{ name: '2001585', email: 'hoonso20@kunsan.ac.kr' }],
   viewport: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0',
-  themeColor: '#FF3B30',
+  themeColor: '#ea2a33',
 }
 
 export default function RootLayout({
@@ -21,11 +25,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className={inter.className}>
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+      </head>
+      <body className={`${plusJakartaSans.className} font-display bg-white dark:bg-zinc-900`}>
         <Providers>
-          <main className="min-h-screen bg-black">
-            {children}
-          </main>
+          {children}
         </Providers>
       </body>
     </html>

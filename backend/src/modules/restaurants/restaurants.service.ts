@@ -111,10 +111,10 @@ export class RestaurantsService {
           { status: 'active' },
           {
             OR: [
-              { name: { contains: query, mode: 'insensitive' } },
-              { category: { contains: query, mode: 'insensitive' } },
-              { addressCity: { contains: query, mode: 'insensitive' } },
-              { addressDistrict: { contains: query, mode: 'insensitive' } },
+              { name: { contains: query } },
+              { category: { contains: query } },
+              { addressCity: { contains: query } },
+              { addressDistrict: { contains: query } },
             ],
           },
         ],

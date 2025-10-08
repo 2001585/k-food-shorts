@@ -4,34 +4,39 @@
 
 @layer base {
   :root {
-    --primary-red: #FF3B30;
-    --primary-orange: #FF9500;
+    /* Instagram-style K-Food Colors */
+    --primary: #ea2a33;
+    --background-light: #f8f6f6;
+    --background-dark: #211111;
     
-    --neutral-black: #1C1C1E;
-    --neutral-gray-900: #2C2C2E;
-    --neutral-gray-500: #8E8E93;
-    --neutral-gray-100: #F2F2F7;
-    --neutral-white: #FFFFFF;
+    /* Text Colors */
+    --text-primary-light: #000000;
+    --text-primary-dark: #ffffff;
+    --text-secondary-light: #6b7280;
+    --text-secondary-dark: #9ca3af;
+    --text-muted-light: #9ca3af;
+    --text-muted-dark: #6b7280;
     
-    --semantic-success: #34C759;
-    --semantic-warning: #FF9500;
-    --semantic-error: #FF3B30;
-    --semantic-info: #007AFF;
+    /* Border Colors */
+    --border-light: #e5e7eb;
+    --border-dark: #374151;
+    
+    /* Card Background */
+    --card-bg-light: #ffffff;
+    --card-bg-dark: #1f2937;
   }
 
   .dark {
-    --dark-bg: #000000;
-    --dark-surface: #1C1C1E;
-    --dark-text: #FFFFFF;
+    color-scheme: dark;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-gray-200;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-white text-black;
   }
 }
 
@@ -51,6 +56,18 @@
 body {
   -ms-overflow-style: none;
   scrollbar-width: none;
+  background: #ffffff;
+  overscroll-behavior: none;
+}
+
+/* Hide scrollbar utility class */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
 /* Snap scroll for feed */
@@ -67,4 +84,48 @@ body {
   width: 100vw;
   height: 100vh;
   object-fit: cover;
+}
+
+/* Mobile viewport fix */
+html, body {
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height */
+}
+
+/* Prevent overscroll bounce on mobile */
+html {
+  overscroll-behavior: none;
+}
+
+/* Instagram/TikTok style animations */
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.heart-animation {
+  animation: heartBeat 0.6s ease-in-out;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass morphism effect */
+.glass {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Custom button hover effects */
+.btn-floating:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
